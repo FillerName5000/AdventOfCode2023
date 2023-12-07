@@ -1,12 +1,9 @@
 const STARTING_SPEED = 0;
 const SPEED_INCREASE_PER_MS = 1;
 class WhatAreYouDoingInMySwampError extends Error {}
-/*  Time:        53     71     78     80
-    Distance:   275   1181   1215   1524 */
-const actualTimesAndRecords = new Map<number, number>([ [53, 275],
-                                                        [71, 1181],
-                                                        [78, 1215],
-                                                        [80, 1524]]);
+/*Time:        53     71     78     80
+Distance:   275   1181   1215   1524*/
+const actualTimesAndRecords = new Map<number, number>([[53717880, 275118112151524]]);
 
 function main(): void {
     const waysToBeatRecord = [];
@@ -16,11 +13,9 @@ function main(): void {
             const maxRec = getMaximumRecordSettingMs(time, minRec);
             waysToBeatRecord.push(getWaysToBeatRecord(minRec, maxRec));
         }
-        console.log(waysToBeatRecord);
     }
 
-    const res = waysToBeatRecord.reduce((accumulator, currentValue) => accumulator * currentValue, 1);
-    console.log(res);
+    console.log(waysToBeatRecord[0]);
 }
 
 function getMinimumRecordSettingMs(raceMs: number, recordToBeat: number): number {
@@ -32,7 +27,7 @@ function getMinimumRecordSettingMs(raceMs: number, recordToBeat: number): number
 
 function getMaximumRecordSettingMs(raceMs: number, minRecordSettingMs: number): number {
     return raceMs - minRecordSettingMs; //mirrored
-}
+} 
 
 function getWaysToBeatRecord(min: number, max: number): number {
     return max - min + 1;// including bounds
