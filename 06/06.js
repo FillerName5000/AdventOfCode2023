@@ -11,28 +11,21 @@ const actualTimesAndRecords = new Map([[53, 275],
     [80, 1524]]);
 function main() {
     const waysToBeatRecord = [];
-    for (const time in actualTimesAndRecords) {
-        const timeInt = parseInt(time);
-        const res = actualTimesAndRecords.get(timeInt);
-        let recordToBeat;
-        if (res !== undefined) {
-            recordToBeat = res;
-        }
-        else {
-            throw new WhatAreYouDoingInMySwampError("Skill issue");
-        }
-        const minRec = getMinimumRecordSettingMs(timeInt, recordToBeat);
+    for (const [time, record] of actualTimesAndRecords) {
+        const minRec = getMinimumRecordSettingMs(time, record);
         if (minRec >= 0) {
-            const maxRec = getMaximumRecordSettingMs(timeInt, minRec);
+            const maxRec = getMaximumRecordSettingMs(time, minRec);
             waysToBeatRecord.push(getWaysToBeatRecord(minRec, maxRec));
         }
         console.log(waysToBeatRecord);
     }
+    const res = waysToBeatRecord.reduce((accumulator, currentValue) => accumulator * currentValue, 1);
+    console.log(res);
 }
 function getMinimumRecordSettingMs(raceMs, recordToBeat) {
-    for (let i = 1; i < raceMs; i++) {
+    for (let i = 0; i < raceMs; i++) {
         if (calcDistance(raceMs, i) > recordToBeat)
-            return raceMs;
+            return i;
     }
     return -1; //record's unbeaten, nothing to add
 }
@@ -49,4 +42,6 @@ function calcDistance(raceMs, buttonPressMs) {
     const travelTimeMs = raceMs - buttonPressMs;
     return speedPerMs * travelTimeMs;
 }
+
+
 main();
